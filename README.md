@@ -1,50 +1,40 @@
-# 📡 TrackTag: Real-Time Autonomous RFID Inventory & Loss Prevention
+# <p align="center"><img src="client/public/favicon.svg" width="48" alt="TrackTag Logo" valign="middle"/> TrackTag</p>
+<p align="center"><strong>Autonomous Real-Time RFID Inventory Management & Loss Prevention Engine</strong></p>
 
-> A premium, low-latency, IoT-driven warehouse telemetry dashboard. Autonomous asset tracking, predictive runout forecasting, and real-time loss prevention—powered by Node.js, Socket.IO WebSockets, and SQLite WAL database engine.
+<p align="center">
+  <img src="https://img.shields.io/badge/Vite-v6.0-purple?style=for-the-badge&logo=vite&logoColor=white" alt="Vite Version"/>
+  <img src="https://img.shields.io/badge/React-19.0-blue?style=for-the-badge&logo=react&logoColor=white" alt="React Version"/>
+  <img src="https://img.shields.io/badge/Socket.io-4.8-black?style=for-the-badge&logo=socketdotio" alt="Socket.io Version"/>
+  <img src="https://img.shields.io/badge/SQLite-WAL_Mode-blue?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite Version"/>
+</p>
+
+<p align="center">
+  <em>An elegant, low-latency, IoT-driven warehouse telemetry dashboard. Features autonomous asset tracking, predictive runout forecasting, and real-time loss prevention warnings.</em>
+</p>
 
 ---
 
-## 📖 Executive Summary
-In modern logistics and retail, inventory delays and stock shrinkage represent billions in lost revenue. **TrackTag** is a real-time, autonomous inventory tracking system simulating physical RFID scanners. 
+## ⚡ Core Value-Adding Features
 
-Unlike traditional passive inventory systems that rely on slow, manual database queries, TrackTag implements a **push telemetry pipeline**. As soon as an RFID reader registers a tag scan, the event is recorded in a highly concurrent database and immediately broadcasted to all connected web clients, rendering visual sweeps, predictive forecasts, and security warnings under 50 milliseconds.
+### 🗺️ Interactive Floorplan Heatmap
+* **Spatial Blueprints:** A blueprint grid mapping five facility zones: **Warehouse A, Warehouse B, Warehouse C, Showroom Floor, and Loading Dock**.
+* **Visual Sweeps:** Scans flash zones with a glowing teal animation and pulse radar indicators.
+* **Hover Tooltips:** Hovering over any zone raises its layout layer (`z-index: 100`) and displays a detailed tooltip card showing items inside.
 
----
-
-## ⚡ Core Value-Adding Features (Tier 1)
-
-### 1. Interactive Floorplan Heatmap
-* **Spatial Blueprints:** Renders a gorgeous, custom-designed grid mapping five major facility zones: **Warehouse A, Warehouse B, Warehouse C, Showroom Floor, and the Loading Dock**.
-* **Real-time Sweeps:** Telemetry events fire instant teal highlights and pulse animation cues directly inside corresponding room cells.
-* **Hover Tooltips:** Hovering over any zone raises its layout layer (`z-index`) and reveals a sleek details modal listing all assets and quantities currently situated in that room.
-
-### 2. "Find My Item" Live Locator
+### 🔍 "Find My Item" Live Locator
 * **Target Radar Tracking:** Type any part of an item name into the search bar. The corresponding room immediately glows purple with an animated locator beacon (`📍`) and pulsing radar rings.
 
-### 3. Predictive Runout & Reorder Forecasting
+### 📊 Predictive Runout & Reorder Forecasting
 * **Depletion Modeling:** SQLite stores real-time unit costs and daily depletion usage rates for all assets.
-* **Proactive Warning Flags:** Computes estimated depletion dates (`Stock / Daily Consumption`) and displays alerts (e.g. `⚠️ 2 days`) for inventory items forecast to run out within 3 to 7 days.
+* **Proactive Warning Flags:** Computes estimated depletion dates (`Stock / Daily Consumption`) and displays alerts (e.g. `⚠️ 2 days` left) for inventory items forecast to run out within 3 to 7 days.
 
-### 4. Loss Prevention & Restricted Relocations
+### 🚨 Loss Prevention & Restricted Relocations
 * **Unauthorized Bay Crossings:** High-value assets like the *27" 4K Monitor* and *Standing Desk* are forbidden from entering shipping gates. If the simulation detects restricted movement, it flags it as a potential theft event.
 * **Real-Time Crimson Alerts:** Emits immediate Socket.IO warning broadcasts, sliding in a compact red alert toast with independent auto-dismiss timers.
 
 ---
 
-## 🛠️ Technology Stack & System Design
-
-| Layer | Technology | Details / Rationale |
-| :--- | :--- | :--- |
-| **Frontend UI** | React 19 + Vite | Rapid, component-driven client rendering. |
-| **Animations** | Framer Motion | Smooth, spring-based transitions for router changes and toast alerts. |
-| **Styling** | Custom HSL Vanilla CSS | Custom design tokens using CSS Custom Properties. **Zero Tailwind, Bootstrap, or utility dependencies.** |
-| **Real-time API** | Socket.IO WebSockets | Bidirectional event pipeline for scan telemetry, low-stock flags, anomalies, and theft warnings. |
-| **Backend Engine** | Node.js + Express | Lightweight, fast asynchronous server handling REST and WebSocket connections. |
-| **Database** | SQLite (`better-sqlite3`) | Persistent local database in **Write-Ahead Logging (WAL) Mode** for non-blocking concurrent writes. |
-
----
-
-## 🗺️ System Architecture & Telemetry Data Flow
+## 🗺️ System Architecture
 
 ```mermaid
 graph TD
@@ -59,15 +49,12 @@ graph TD
     end
 ```
 
-### Telemetry Workflow Steps
-1. **Telemetry Event:** The simulator generates an RFID scan, modifying the stock balance (increment or depletion) in a physical zone.
-2. **Database Logging:** The server updates the item's location and quantity, logs a scan record in the `scan_log` history table, and logs any warning logs in the `alert_log` table.
-3. **WebSocket Broadcast:** The server pushes `scan-update`, `low-stock-alert`, `anomaly-alert`, or `theft-alert` signals.
-4. **Client Render:** React listens, updates active items list, increments zone counts, triggers CSS highlights, and injects compact, auto-dismissing toasts.
-
 ---
 
 ## 📂 Project Directory Structure
+
+<details>
+<summary>📂 Click to view folder structure</summary>
 
 ```text
 tracktag-mvp/
@@ -75,7 +62,7 @@ tracktag-mvp/
 ├── README.md                  # Comprehensive platform documentation
 ├── project_checklist.md       # Artifact walkthrough and presentation scripts
 ├── server/                    # Node.js Backend Services
-│   ├── tracktag.db            # SQLite persistent database file
+│   ├── tracktag.db            # SQLite database file
 │   ├── index.js               # Main Express HTTP server & Socket.IO initialization
 │   ├── db.js                  # Database schemas, column migrations, WAL setups
 │   ├── seed.js                # Database seeder (inserts prices and depletion metrics)
@@ -99,42 +86,55 @@ tracktag-mvp/
         └── components/
             └── AlertToast.jsx     # Compact, self-dismissing Toast alert items
 ```
+</details>
 
 ---
 
-## 🚀 Execution & Command Reference
+## 🛠️ Design System & Color Tokens
 
-### Root Directory Commands
-* **Install All Dependencies:** Installs packages for root concurrently package, server, and client apps.
-  ```bash
-  npm run install:all
-  ```
-* **Run Dev Environment:** Spins up the backend (Port `4000`) and Vite frontend dev server (Port `5173`) concurrently.
-  ```bash
-  npm run dev
-  ```
+Our custom design system is written in Vanilla CSS using HSL variables to support dynamic themes, smooth transitions, and high-performance animations:
 
-### Client Subfolder Commands
-* **Build Frontend:** Compiles production bundle assets to `dist/`.
-  ```bash
-  npm run build
-  ```
-* **Preview Build:** Launches a local server running the compiled static build.
-  ```bash
-  npm run preview
-  ```
+```css
+:root {
+  /* Core Colors */
+  --color-primary: #1c5d65;       /* Warm Deep Teal */
+  --color-primary-light: #f3f8f9; /* Warm Light Teal */
+  --color-accent: #f0ebe1;        /* Soft Sand Cream */
+  --color-success: #10b981;       /* Active Emerald Green */
+  --color-alert: #e05a47;         /* Warning Terracotta Red */
+  --color-anomaly: #f59e0b;       /* Silent Alert Amber */
 
-### Server Subfolder Commands
-* **Start Backend Separately:** Launches the server database and listeners.
-  ```bash
-  npm start
-  ```
+  /* Text Colors */
+  --color-text-title: #2b2b2b;    /* Dark Charcoal */
+  --color-text-main: #4a4a4a;     /* Soft Dark Grey */
+  --color-text-muted: #8c8c8c;    /* Neutral Grey */
+}
+```
+
+---
+
+## 🚀 Commands & Getting Started
+
+### 1. Installation
+Install root, backend, and client packages:
+```bash
+npm run install:all
+```
+
+### 2. Launch Development Servers
+Start backend (Port `4000`) and Vite frontend dev server (Port `5173`) concurrently:
+```bash
+npm run dev
+```
+
+* **Frontend Dashboard:** [http://localhost:5173](http://localhost:5173)
+* **Backend REST API:** [http://localhost:4000](http://localhost:4000)
 
 ---
 
 ## 🧪 Live Demonstration Instructions
 
-Follow these steps to demonstrate the platform to a stakeholder:
+Follow these steps to demonstrate the platform:
 
 1. **Test the Live Search Locator:**
    * In the top-right search box of the floorplan, type `"Mouse"`.
@@ -156,12 +156,39 @@ Follow these steps to demonstrate the platform to a stakeholder:
 
 ## 🌐 Product Expansion Roadmap
 
-### Enterprise Scale (Tier 2)
-* **ERP / POS Adapters:** Connect directly to APIs for Shopify, SAP S/4HANA, or Tally Prime to automatically reconcile physical counts against digital ledger bills of materials.
-* **Multi-Tenant SaaS Partitioning:** Isolated tenancy tables and user roles to support different organizations on a single cloud database engine.
-* **Edge AI Gateway Filters:** Move anomaly detection directly to the hardware level (e.g. Raspberry Pi RFID gateways) to maintain security during offline connectivity drops.
-
-### Interface & Engagement (Tier 3)
-* **WebXR Spatial Camera HUD:** Overlay green/red item boundaries and directions on a mobile browser feed when scanning shelves.
-* **Natural Voice Queries:** hands-free verbal stock inquiries using Web Speech APIs (e.g., *"Show current inventory details for Warehouse C"*).
-* **Cycle Count Leaderboards:** Team gamification widgets tracking inventory scan counts to incentivize speed.
+<div align="center">
+  <table>
+    <thead>
+      <tr>
+        <th>🏢 Enterprise Core Abstractions (Tier 2)</th>
+        <th>✨ Future Interface & Voice Extensions (Tier 3)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <strong>ERP / POS Connectors:</strong> Direct integration with SAP S/4HANA, Tally Prime, and Shopify API to automatically reconcile physically read RFID stock counts against digital purchase records.
+        </td>
+        <td>
+          <strong>Augmented Reality Spatial HUD:</strong> A mobile WebXR overlay displaying a virtual navigation line and inventory info directly onto camera feeds when scanning shelves.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Multi-Tenant SaaS Infrastructure:</strong> Partitioned databases and secure portals supporting multiple companies tracking separate warehouses on a single distributed SaaS instance.
+        </td>
+        <td>
+          <strong>Natural Language Voice Queries:</strong> Hands-free verbal stock inquiries using Web Speech APIs (e.g. <em>"What is the stock level of Wireless Mice in Warehouse A?"</em>).
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Offline-First Edge AI Gateway:</strong> Deploying the anomaly checking filters right onto physically connected Raspberry Pi/Impinj gateway reader devices.
+        </td>
+        <td>
+          <strong>Gamified Staff Leaderboards:</strong> Leaderboard systems tracking staff scan verification counts and shelf order compliance rates to incentivize audit speed.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
