@@ -9,6 +9,12 @@
 </p>
 
 <p align="center">
+  <a href="https://tracktag-automatic-inventory-tracking.onrender.com/" target="_blank">
+    <img src="https://img.shields.io/badge/Live_Demo-on_Render-success?style=for-the-badge&logo=render&logoColor=white" alt="Live Demo"/>
+  </a>
+</p>
+
+<p align="center">
   <em>An elegant, low-latency, IoT-driven warehouse telemetry dashboard. Features autonomous asset tracking, predictive runout forecasting, and real-time loss prevention warnings.</em>
 </p>
 
@@ -127,8 +133,9 @@ Start backend (Port `4000`) and Vite frontend dev server (Port `5173`) concurren
 npm run dev
 ```
 
-* **Frontend Dashboard:** [http://localhost:5173](http://localhost:5173)
-* **Backend REST API:** [http://localhost:4000](http://localhost:4000)
+* **Live Production Link:** [https://tracktag-automatic-inventory-tracking.onrender.com/](https://tracktag-automatic-inventory-tracking.onrender.com/)
+* **Frontend Dashboard (Local):** [http://localhost:5173](http://localhost:5173)
+* **Backend REST API (Local):** [http://localhost:4000](http://localhost:4000)
 
 ---
 
